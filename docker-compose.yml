@@ -23,7 +23,7 @@ services:
       - "4242:4242"
     environment:
       # This points Unleash to its backing database (defined in the `db` section below)
-      DATABASE_URL: "postgres://unleash:$${project.POSTGRES_PASSWORD}@db/db"
+      - "DATABASE_URL=postgres://unleash:${project.POSTGRES_PASSWORD}@db/db"
       # Disable SSL for database connections. @chriswk: why do we do this?
       DATABASE_SSL: "false"
       # Changing log levels:
@@ -53,7 +53,7 @@ services:
       # create a database called `db`
       POSTGRES_DB: "db"
       POSTGRES_USER: "unleash"
-      POSTGRES_PASSWORD: $${project.POSTGRES_PASSWORD}
+      - "POSTGRES_PASSWORD=${project.POSTGRES_PASSWORD}"
     volumes:
       - unleash_db:/var/lib/postgresql/data
     healthcheck:
