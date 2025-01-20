@@ -52,8 +52,8 @@ services:
     environment:
       # create a database called `db`
       POSTGRES_DB: "db"
-      POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
       - unleash_db:/var/lib/postgresql/data
     healthcheck:
