@@ -23,18 +23,18 @@ services:
       - "4242:4242"
     environment:
       # This points Unleash to its backing database (defined in the `db` section below)
-      - "DATABASE_URL=postgres://unleash:${project.POSTGRES_PASSWORD}@db/db"
+      DATABASE_URL: "postgres://unleash:${POSTGRES_PASSWORD}@db/db"
       # Disable SSL for database connections. @chriswk: why do we do this?
       DATABASE_SSL: "false"
       # Changing log levels:
       LOG_LEVEL: "warn"
       # Proxy clients must use one of these keys to connect to the
       # Proxy. To add more keys, separate them with a comma (`key1,key2`).
-      - "INIT_FRONTEND_API_TOKENS=${project.INIT_FRONTEND_API_TOKENS}"
+      INIT_FRONTEND_API_TOKENS: ${INIT_FRONTEND_API_TOKENS}
       # Initialize Unleash with a default set of client API tokens. To
       # initialize Unleash with multiple tokens, separate them with a
       # comma (`token1,token2`).
-      - "INIT_CLIENT_API_TOKENS=${project.INIT_CLIENT_API_TOKENS}"
+      INIT_CLIENT_API_TOKENS: ${project.INIT_CLIENT_API_TOKENS}
     depends_on:
       db:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
       # create a database called `db`
       POSTGRES_DB: "db"
       POSTGRES_USER: "unleash"
-      - "POSTGRES_PASSWORD=${project.POSTGRES_PASSWORD}"
+      POSTGRES_PASSWORD: ${project.POSTGRES_PASSWORD}
     volumes:
       - unleash_db:/var/lib/postgresql/data
     healthcheck:
