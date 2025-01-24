@@ -44,5 +44,30 @@ services:
       timeout: 1m
       retries: 5
       start_period: 15s
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    expose:
+      - "5432"
+    image: postgres:15
+    environment:
+      # create a database called `db`
+      POSTGRES_DB: "db"
+      # trust incoming connections blindly (DON'T DO THIS IN PRODUCTION!)
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "pg_isready",
+          "--username=postgres",
+          "--host=localhost",
+          "--port=5432"
+        ]
+      interval: 2s
+      timeout: 1m
+      retries: 5
+      start_period: 10s
 
-# No separate db service or volumes, since you're using an external DB.
+  
